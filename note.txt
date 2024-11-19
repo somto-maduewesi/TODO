@@ -1,0 +1,28 @@
+CRUD - CREATE, READ, UPDATE, DELETE
+
+py -m venv nameOfEvironment - To Creat a virtual environment
+nameOfEvironment/Scripts/activate - To activate the virtual environment
+pip install django - To install django in that environment
+django-admin startproject projectName - To start a django project
+py manage.py runserver - To run The Project Server
+py manage.py startapp appName - To start an App in our Project
+py manage.py createsuperuser - To create a super user/admin for our app
+
+After creating an app 'appName', you have to register it so you can see any page created in that app; so the app can be viewable. You register by adding the name of your app to the INSTALLED_APPS in settings.py (eg. INSTALLED_APPS = [
+    '...',
+    '...',
+    # My Apps
+    'appName',
+])
+
+if your creating a view always take in a request, and return a http response(html).
+
+TO LOAD BOOTSTRAP 5 INTO YOUR DJANGO PROJECT:
+- Activate your virtual environment.
+- Install Bootstrap: pip install django-bootstrap-v5
+- Add 'bootstrap5', to your INSTALLED_APPS in settings.py
+- Insert {% load bootstrap5 %}, {% bootstrap_css %}, and {% bootstrap_javascript %} into the head section of your template html.
+    The first line tells Django that it should load the Bootstrap 5 module in this template.
+    The second line inserts the <link> element with the referral to the bootstrap stylesheet.
+    The third line inserts the <script> element with the referral to the necessary javascript file.
+DONE!

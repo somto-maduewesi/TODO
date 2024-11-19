@@ -1,0 +1,108 @@
+{% load static %}
+{% load bootstrap5 %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo List</title>
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+  <link rel="stylesheet" href="{% static 'todo.css' %}">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f5f5f5;
+    }
+
+    .todo-container {
+      max-width: 600px;
+      margin: 80px auto;
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .todo-header {
+      background-color: #6f42c1;
+      color: #fff;
+      padding: 20px;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+    }
+
+    .todo-header h1 {
+      font-size: 28px;
+      font-weight: 600;
+    }
+
+    .todo-list {
+      padding: 20px;
+    }
+
+    .todo-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-radius: 8px;
+      background-color: #f8f9fa;
+      margin-bottom: 12px;
+    }
+
+    .todo-item.completed {
+      background-color: #e9ecef;
+      text-decoration: line-through;
+      color: #adb5bd;
+    }
+
+    .todo-item .form-check-input {
+      margin-right: 12px;
+    }
+
+    .btn-primary {
+      background-color: #6f42c1;
+      border-color: #6f42c1;
+      border-radius: 8px;
+    }
+
+    .btn-primary:hover {
+      background-color: #59339d;
+      border-color: #4e2d8c;
+    }
+  </style>
+</head>
+<body>
+  <div class="todo-container">
+    <div class="todo-header">
+      <div class="d-flex justify-content-between">
+        <h1>Todo List</h1>
+        <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
+      </div>
+      <h2>{{request.user.username}}</h2>
+    </div>
+    <div class="todo-list">
+      <form class="d-flex mb-4" method="post">
+        {% csrf_token %}
+        <input class="form-control me-2" type="text" placeholder="Add a new task" aria-label="Add task" name="task" required>
+        <button class="btn btn-primary" type="submit">Add</button>
+      </form>
+      <div class="todo-items">
+        {% for item in data  %}
+        <div class="todo-item">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="todo1" autocomplete="off" {% if item.done %} checked {% endif %} onchange="window.location.href = `{% url 'edit-todo' item.id %}`">
+              <label class="form-check-label" for="todo1">
+                {{item.todo}}
+              </label>
+            </div>
+            <button class="btn btn-primary btn-sm">
+              <a href="{% url 'delete-todo' item.id %}">Delete</a>
+            </button>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</body>
+</html>
